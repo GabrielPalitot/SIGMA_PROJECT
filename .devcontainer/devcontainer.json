@@ -1,0 +1,20 @@
+{
+	"name": "SIGMA PROJECT",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/${localWorkspaceFolderBasename}",
+	"customizations": {
+	  "vscode": {
+		"extensions": [
+		  "biomejs.biome@prerelease",
+		  "ms-azuretools.vscode-docker"
+		]
+	  }
+	},
+	"features": {
+	  "ghcr.io/devcontainers/features/common-utils:2": {},
+	  "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {}
+	},
+	"remoteUser": "root",
+	"postCreateCommand": "bash .devcontainer/install.sh"
+}

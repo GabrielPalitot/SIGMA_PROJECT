@@ -1,0 +1,29 @@
+{
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": "explicit"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.quickSuggestions": {
+			"strings": true
+		},
+		"editor.suggest.insertMode": "replace",
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"biome.enabled": true,
+	"biome.requireConfigFile": false,
+	"biome.projects": [
+		{
+			"path": "./backend/sigma-api/",
+		},
+		{
+			"path": "./frontend/",
+		}
+	],
+}
