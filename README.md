@@ -2,7 +2,9 @@
 
 - Primeiro passo é criar um arquivo .env na raiz do projeto:
 ```bash
-Application_name=SIGMA_PROJECT
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=sigma_db
 ```
 - Depois é ter certeza que você tem o docker instalado
 
