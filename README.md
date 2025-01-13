@@ -1,10 +1,15 @@
 # Rodando o Projeto
 
-- Primeiro passo é criar um arquivo .env na raiz do projeto:
+- Primeiro passo é criar um arquivo .env em sigma_project/backend/sigma-api/:
 ```bash
+NODE_ENV=local
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=sigma_db
+DB_PORT=5432
+DB_HOST=localhost
+DB_TYPE=postgres
+SERVER_PORT=8500
 ```
 - Depois é ter certeza que você tem o docker instalado
 

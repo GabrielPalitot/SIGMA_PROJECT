@@ -47,6 +47,9 @@
 				  "level": "error",
 				  "fix": "none"
 				}
+			},
+			"complexity":{
+				"noStaticOnlyClass": "off"
 			}
 		}
 	}
