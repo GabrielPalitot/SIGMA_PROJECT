@@ -1,29 +1,23 @@
 {
-	"editor.formatOnSave": true,
-	"editor.codeActionsOnSave": {
-		"quickfix.biome": "explicit"
-	},
-	"[javascript]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
-	"[typescript]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
-	"[json]": {
-		"editor.quickSuggestions": {
-			"strings": true
-		},
-		"editor.suggest.insertMode": "replace",
-		"editor.defaultFormatter": "biomejs.biome"
-	},
-	"biome.enabled": true,
-	"biome.requireConfigFile": false,
-	"biome.projects": [
-		{
-			"path": "./backend/sigma-api/",
-		},
-		{
-			"path": "./frontend/",
-		}
-	],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.ts": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "directory": "../backend/sigma-api",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "../frontend/",
+      "changeProcessCWD": true
+    }
+  ]
 }

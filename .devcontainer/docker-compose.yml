@@ -5,7 +5,7 @@ services:
       dockerfile: dockerfile
     container_name: SIGMA-dev-container
     volumes:
-      - ..:/sigma_project:cached
+      - ..:/SIGMA_PROJECT:cached
     ports:
       - "8500:8500"
     command: [ "sleep", "infinity" ]
