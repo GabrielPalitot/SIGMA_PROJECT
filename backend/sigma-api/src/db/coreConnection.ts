@@ -1,9 +1,12 @@
 import { DataSource } from "typeorm";
-import { ormConnection } from "./ormConnection";
-export class PostgresDataBaseConnection {
+import ormconfig from "./ormconfig";
+
+export const AppDataSource = new DataSource(ormconfig);
+
+class PostgresDataBaseConnection {
   public postgresDataSource: DataSource;
   constructor() {
-    this.postgresDataSource = new DataSource(ormConnection);
+    this.postgresDataSource = AppDataSource;
   }
 
   public async connect(): Promise<void> {
@@ -20,7 +23,4 @@ export class PostgresDataBaseConnection {
   }
 }
 
-const postgresConnection = new PostgresDataBaseConnection();
-postgresConnection.connect().then(() => {
-  console.log("Postgres connected");
-});
+export default PostgresDataBaseConnection;
