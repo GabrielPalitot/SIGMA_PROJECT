@@ -21,6 +21,10 @@ class PostgresDataBaseConnection {
       throw error;
     }
   }
+
+  public getDataSource(): DataSource {
+    return this.postgresDataSource;
+  }
 }
 
 export default PostgresDataBaseConnection;
