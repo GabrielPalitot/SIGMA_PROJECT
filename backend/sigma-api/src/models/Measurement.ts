@@ -6,16 +6,28 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-@Entity("iot_devices")
-class IotDevice {
+@Entity("measurements")
+class Measurement {
   @PrimaryGeneratedColumn("uuid")
   id_esp: string;
 
   @Column({ type: "float" })
-  latitude: number;
+  solo_humidity: number;
 
   @Column({ type: "float" })
-  longitude: number;
+  temperature: number;
+
+  @Column({ type: "float" })
+  air_humidity: number;
+
+  @Column({ type: "float" })
+  pressure: number;
+
+  @Column({ type: "bool" })
+  has_rain: boolean;
+
+  @Column()
+  measurement_time: Date;
 
   @CreateDateColumn()
   created_at: Date;
@@ -24,4 +36,4 @@ class IotDevice {
   updated_at: Date;
 }
 
-export default IotDevice;
+export default Measurement;
