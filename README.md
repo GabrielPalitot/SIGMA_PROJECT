@@ -20,3 +20,9 @@ SERVER_PORT=8500
 - O container contém uma instância do postgres 15 e nodejs
 
 - Depois de finalizado, para ter certeza que está tudo certo, rode `yarn start`
+
+- Quando o programa estiver rodando no devcontainer, entre no banco de dados usando dbeaver (lembrando que a porta configurada está em 5450) e rode o seguinte script no banco "sigma_db":
+
+```bash
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+```
