@@ -8,6 +8,7 @@ const ormconfig = {
   username: envHandler.getEnv(EnvKey.DB_USERNAME),
   password: envHandler.getEnv(EnvKey.DB_PASSWORD),
   database: envHandler.getEnv(EnvKey.DB_DATABASE),
+  entities: ["./src/models/*.ts"],
   migrations: ["./src/db/migrations/*.ts"],
 };
 
