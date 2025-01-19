@@ -8,7 +8,7 @@ const mqttClient = mqtt.connect(
 const redis = new Redis();
 
 const REDIS_KEY = "sensor_data_queue";
-const BATCH_SIZE = 60;
+const BATCH_SIZE = 30;
 const API_URL =
   process.env.API_URL || "'http://localhost:8500/api/measurements";
 
@@ -61,4 +61,4 @@ setInterval(async () => {
     console.log(`Processing batch of ${queueLength} remaining items.`);
     await processBatch();
   }
-}, 10000); // Verifica a cada 10 segundos
+}, 120000); // Verifica a cada 10 segundos
