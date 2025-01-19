@@ -1,0 +1,61 @@
+import mqtt from "mqtt";
+import Redis from "ioredis";
+import { saveData } from "../controllers/IotDeviceController";
+
+const mqttClient = mqtt.connect(
+  process.env.MQTT_BROKER_URL || "mqtt://localhost",
+);
+const redis = new Redis();
+
+const REDIS_KEY = "sensor_data_queue";
+const BATCH_SIZE = 60;
+
+mqttClient.on("connect", () => {
+  console.log("Connected to MQTT broker");
+  mqttClient.subscribe("esp32/sensorData");
+});
+
+mqttClient.on("message", async (topic, message) => {
+  if (topic === "esp32/sensorData") {
+    const data = JSON.parse(message.toString());
+
+    // Adiciona os dados na lista Redis
+    await redis.lpush(REDIS_KEY, JSON.stringify(data));
+    console.log("Data added to Redis:", data);
+
+    // Verifica se o tamanho da lista atingiu o limite
+    const queueLength = await redis.llen(REDIS_KEY);
+    if (queueLength >= BATCH_SIZE) {
+      await processBatch();
+    }
+  }
+});
+
+// Processa o lote de dados chamando o controller
+async function processBatch() {
+  // Pega os dados do Redis
+  const batch = await redis.lrange(REDIS_KEY, 0, BATCH_SIZE - 1);
+
+  if (batch.length > 0) {
+    const parsedBatch = batch.map((item) => JSON.parse(item));
+
+    try {
+      // Chama o método do controller para salvar os dados
+      await saveData(parsedBatch);
+
+      // Remove os itens processados do Redis
+      await redis.ltrim(REDIS_KEY, batch.length, -1);
+    } catch (error) {
+      console.error("Erro ao processar o lote:", error);
+    }
+  }
+}
+
+// Cron job para processar dados restantes
+setInterval(async () => {
+  const queueLength = await redis.llen(REDIS_KEY);
+  if (queueLength > 0) {
+    console.log(`Processing batch of ${queueLength} remaining items.`);
+    await processBatch();
+  }
+}, 10000); // Verifica a cada 10 segundos
