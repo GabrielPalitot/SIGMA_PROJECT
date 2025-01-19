@@ -1,6 +1,12 @@
-import { Repository } from "typeorm";
 import Measurement from "../models/Measurement";
+import { postgresHandler } from "..";
 
-class MeasurementRepository extends Repository<Measurement> {}
+export const MeasurementRepoManager = postgresHandler
+  .getDataSource()
+  .getRepository(Measurement);
+
+class MeasurementRepository {
+  private instance = MeasurementRepoManager;
+}
 
 export default MeasurementRepository;

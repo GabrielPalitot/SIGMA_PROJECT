@@ -1,6 +1,12 @@
-import { Repository } from "typeorm";
 import IotDevice from "../models/IotDevice";
+import { postgresHandler } from "..";
 
-class IotDeviceRepository extends Repository<IotDevice> {}
+export const IotDeviceRepoManager = postgresHandler
+  .getDataSource()
+  .getRepository(IotDevice);
+
+class IotDeviceRepository {
+  private instance = IotDeviceRepoManager;
+}
 
 export default IotDeviceRepository;
