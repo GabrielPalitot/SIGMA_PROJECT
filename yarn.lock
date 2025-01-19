@@ -6,3 +6,8 @@
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/@types/swagger-jsdoc/-/swagger-jsdoc-6.0.4.tgz#bb4f60f3a5f103818e022f2e29ff8935113fb83d"
   integrity sha512-W+Xw5epcOZrF/AooUM/PccNMSAFOKWZA5dasNyMujTwsBkU74njSJBpvCCJhHAJ95XRMzQrrW844Btu0uoetwQ==
+
+mqttjs@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/mqttjs/-/mqttjs-0.0.0.tgz#8fb8bf5193281cb5f01377b941c73a0609cfeaae"
+  integrity sha512-LBcdXf7Ab8iI3tPbk5aB5u8ScrGnO4xJsOoA+gi2Ekk00vCrfTB36dVpJCr0IAIp09Zp31WBYCh6x1sBDFZuxQ==
