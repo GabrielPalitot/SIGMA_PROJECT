@@ -1,6 +1,6 @@
 import mqtt from "mqtt";
 import Redis from "ioredis";
-import { saveData } from "../controllers/IotDeviceController";
+import axios from "axios";
 
 const mqttClient = mqtt.connect(
   process.env.MQTT_BROKER_URL || "mqtt://localhost",
@@ -9,14 +9,15 @@ const redis = new Redis();
 
 const REDIS_KEY = "sensor_data_queue";
 const BATCH_SIZE = 60;
+const API_URL = process.env.API_URL || "http://localhost:3000/api/measurements";
 
 mqttClient.on("connect", () => {
   console.log("Connected to MQTT broker");
-  mqttClient.subscribe("esp32/sensorData");
+  mqttClient.subscribe("sigma-project-ggl/measurements");
 });
 
 mqttClient.on("message", async (topic, message) => {
-  if (topic === "esp32/sensorData") {
+  if (topic === "sigma-project-ggl/measurements") {
     const data = JSON.parse(message.toString());
 
     // Adiciona os dados na lista Redis
@@ -31,7 +32,7 @@ mqttClient.on("message", async (topic, message) => {
   }
 });
 
-// Processa o lote de dados chamando o controller
+// Processa o lote de dados chamando a API HTTP
 async function processBatch() {
   // Pega os dados do Redis
   const batch = await redis.lrange(REDIS_KEY, 0, BATCH_SIZE - 1);
@@ -40,13 +41,14 @@ async function processBatch() {
     const parsedBatch = batch.map((item) => JSON.parse(item));
 
     try {
-      // Chama o método do controller para salvar os dados
-      await saveData(parsedBatch);
+      // Chama a API para salvar os dados
+      await axios.post(API_URL, { measurements: parsedBatch });
 
       // Remove os itens processados do Redis
       await redis.ltrim(REDIS_KEY, batch.length, -1);
+      console.log(`Processed batch of ${batch.length} items.`);
     } catch (error) {
-      console.error("Erro ao processar o lote:", error);
+      console.log(error);
     }
   }
 }
