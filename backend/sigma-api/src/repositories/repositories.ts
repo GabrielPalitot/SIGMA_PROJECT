@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
-import IotDeviceRepository from "./IotDeviceRepository";
-import MeasurementRepository from "./MeasurementRepository";
+import IotDeviceRepository from "./iotDevice/IotDeviceRepository";
+import MeasurementRepository from "./measurement/MeasurementRepository";
 
 class Repositories {
   constructor(private readonly dataSource: DataSource) {}

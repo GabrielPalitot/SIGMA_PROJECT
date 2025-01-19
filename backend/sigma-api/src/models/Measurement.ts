@@ -2,14 +2,20 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
+import IotDevice from "./IotDevice";
 
 @Entity("measurements")
 class Measurement {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn("uuid")
   id_esp: string;
+
+  @PrimaryColumn()
+  measurement_time: Date;
 
   @Column({ type: "float" })
   solo_humidity: number;
@@ -26,14 +32,17 @@ class Measurement {
   @Column({ type: "bool" })
   has_rain: boolean;
 
-  @Column()
-  measurement_time: Date;
-
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @ManyToOne(() => IotDevice, (iotDevice) => iotDevice.measurements, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "id_esp" })
+  iotDevice: IotDevice;
 }
 
 export default Measurement;

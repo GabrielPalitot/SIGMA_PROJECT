@@ -1,11 +1,11 @@
 import zodToOpenAPI from "../../utils/zodUtilitary";
-import { CreateIotDeviceDTO } from "./schema";
+import { IotDeviceDTO } from "./schema";
 
 class IotDeviceSwagger {
   private route = "/iot-device";
 
   public schemas = {
-    CreateIotDeviceDTO: zodToOpenAPI(CreateIotDeviceDTO),
+    IotDeviceDTO: zodToOpenAPI(IotDeviceDTO),
   };
 
   public swagger = {
@@ -18,7 +18,7 @@ class IotDeviceSwagger {
         required: true,
         content: {
           "application/json": {
-            schema: this.schemas.CreateIotDeviceDTO,
+            schema: this.schemas.IotDeviceDTO,
           },
         },
       },
