@@ -1,6 +1,8 @@
 import IotDeviceSwagger from "../controllers/iotDevice/swagger";
+import MeasurementSwagger from "../controllers/measurements/swagger";
 
 const iotDeviceSwagger = new IotDeviceSwagger();
+const measurementSwagger = new MeasurementSwagger();
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -12,10 +14,12 @@ const swaggerOptions = {
     },
     paths: {
       ...iotDeviceSwagger.swaggerController,
+      ...measurementSwagger.swaggerController,
     },
     components: {
       schemas: {
         ...iotDeviceSwagger.schemas,
+        ...measurementSwagger.schemas,
       },
     },
   },

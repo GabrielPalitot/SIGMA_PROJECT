@@ -1,37 +1,48 @@
-import { Request, Response } from "express";
-// import { postgresHandler } from "..";
+import { Request, Response, Router } from "express";
+import { IMeasurementRepository } from "../../repositories/measurement/MeasurementRepositoryInterface";
+import MeasurementService from "../../services/Measurement";
+import { MeasurementsArrayDTO, ResponseMeasurementsArrayDTO } from "./schema";
 
-// interface ISaveData {
-//   id_esp: string;
-//   solo_humidity: number;
-//   temperature: number;
-//   pressure: number;
-//   has_rain: boolean;
-// }
-
-export class MeasurementController {
-  public saveData = async (
-    request: Request,
-    response: Response,
-  ): Promise<Response> => {
+class MeasurementController {
+  public router: Router;
+  public measurementService = new MeasurementService(
+    this.measurementRepository,
+  );
+  constructor(private readonly measurementRepository: IMeasurementRepository) {
+    this.router = Router();
+    this.routes();
+  }
+  public createMeasurements = async (
+    req: Request,
+    res: Response,
+  ): Promise<any> => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { measurements } = request.body;
-      return response.status(201).json({
-        id_esp: "12345",
-        solo_humidity: 0,
-        temperature: 25,
-        pressure: 45,
-        has_rain: true,
-      });
-    } catch (error) {
-      console.log(error);
-      // Retorna uma resposta de erro caso algo dê errado
-      return response.status(500).json({
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
-      });
+      const measurements = MeasurementsArrayDTO.parse(req.body);
+      const result =
+        await this.measurementService.createMeasurements(measurements);
+      const parsedResult = ResponseMeasurementsArrayDTO.parse(result);
+      return res.status(201).json(parsedResult);
+    } catch (error: any) {
+      return res.status(500).json({ error: error.message });
     }
   };
+
+  public getAllMeasurements = async (
+    req: Request,
+    res: Response,
+  ): Promise<any> => {
+    try {
+      const result = await this.measurementService.getAll();
+      const parsedResult = ResponseMeasurementsArrayDTO.parse(result);
+      return res.status(200).json(parsedResult);
+    } catch (error: any) {
+      return res.status(500).json({ error: error.message });
+    }
+  };
+  public routes() {
+    this.router.post("/measurements", this.createMeasurements);
+    this.router.get("/measurements/all", this.getAllMeasurements);
+  }
 }
-export default new MeasurementController();
+
+export default MeasurementController;
