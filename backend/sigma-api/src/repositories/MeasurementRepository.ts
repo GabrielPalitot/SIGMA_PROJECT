@@ -1,12 +1,9 @@
 import Measurement from "../models/Measurement";
-import { postgresHandler } from "..";
-
-export const MeasurementRepoManager = postgresHandler
-  .getDataSource()
-  .getRepository(Measurement);
+import { DataSource } from "typeorm";
 
 class MeasurementRepository {
-  private instance = MeasurementRepoManager;
+  constructor(private readonly dataSource: DataSource) {}
+  private instance = this.dataSource.getRepository(Measurement);
 }
 
 export default MeasurementRepository;

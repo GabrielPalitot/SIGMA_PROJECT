@@ -19,6 +19,7 @@ export default [
     rules: {
       "prettier/prettier": "error",
       "no-var": "error",
+      "@typescript-eslint/no-explicit-any": "off",
       semi: "error",
       quotes: ["error", "double"],
     },

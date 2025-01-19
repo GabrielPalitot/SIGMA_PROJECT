@@ -12,7 +12,7 @@ class IotDeviceController {
     try {
       const data = req.body as CreateIotDeviceDTOType;
       return res.status(201).json(data);
-    } catch (error) { 
+    } catch (error: any) {
       return res.status(500).json({ error: error.message });
     }
   };

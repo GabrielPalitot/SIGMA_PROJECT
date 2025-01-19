@@ -1,12 +1,9 @@
+import { DataSource } from "typeorm";
 import IotDevice from "../models/IotDevice";
-import { postgresHandler } from "..";
-
-export const IotDeviceRepoManager = postgresHandler
-  .getDataSource()
-  .getRepository(IotDevice);
 
 class IotDeviceRepository {
-  private instance = IotDeviceRepoManager;
+  constructor(private readonly dataSource: DataSource) {}
+  private instance = this.dataSource.getRepository(IotDevice);
 }
 
 export default IotDeviceRepository;
