@@ -11,6 +11,8 @@ export const ResponseIotDeviceDTO = z.object({
   latitude: z.number(),
   longitude: z.number(),
   id_identity_user: z.number(),
+  created_at: z.string().datetime({ offset: true }),
+  updated_at: z.string().datetime({ offset: true }),
 });
 
 export type IotDeviceDTOType = z.infer<typeof IotDeviceDTO>;

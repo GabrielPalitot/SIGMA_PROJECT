@@ -41,6 +41,7 @@ class HttpServer {
 
   setupRoutes(controllers: Controllers) {
     this.app.use(controllers.iotDeviceController.router);
+    this.app.use(controllers.measurementController.router);
   }
 
   getExpressApp(): express.Application {
@@ -52,5 +53,5 @@ const httpServer = new HttpServer();
 httpServer.setup();
 const app = httpServer.getExpressApp();
 app.listen(8500, () => {
-  console.log("Server is running on port 3000");
+  console.log("Server is running on port 8500");
 });

@@ -1,11 +1,12 @@
 import zodToOpenAPI from "../../utils/zodUtilitary";
-import { IotDeviceDTO } from "./schema";
+import { IotDeviceDTO, ResponseIotDeviceDTO } from "./schema";
 
 class IotDeviceSwagger {
   private route = "/iot-device";
 
   public schemas = {
     IotDeviceDTO: zodToOpenAPI(IotDeviceDTO),
+    ResponseIotDeviceDTO: zodToOpenAPI(ResponseIotDeviceDTO),
   };
 
   public swagger = {
@@ -25,6 +26,41 @@ class IotDeviceSwagger {
       responses: {
         "201": {
           description: "IoT Device successfully created",
+          content: {
+            "application/json": {
+              schema: this.schemas.ResponseIotDeviceDTO,
+            },
+          },
+        },
+        "500": {
+          description: "Internal Server Error",
+        },
+      },
+    },
+    get: {
+      summary: "GET IoT device by ID",
+      operationId: "getIotDevice",
+      tags: ["IoT Devices"],
+      parameters: [
+        {
+          name: "id_esp",
+          in: "path",
+          required: true,
+          schema: { type: "string", format: "uuid" },
+          description: "The ID of the IoT device to retrieve",
+        },
+      ],
+      responses: {
+        "200": {
+          description: "IoT Device successfully retrieved",
+          content: {
+            "application/json": {
+              schema: this.schemas.ResponseIotDeviceDTO,
+            },
+          },
+        },
+        "404": {
+          description: "IoT Device not found",
         },
         "500": {
           description: "Internal Server Error",
@@ -36,6 +72,9 @@ class IotDeviceSwagger {
   public swaggerController = {
     [`${this.route}`]: {
       post: this.swagger.create,
+    },
+    [`${this.route}/{id_esp}`]: {
+      get: this.swagger.get,
     },
   };
 }
