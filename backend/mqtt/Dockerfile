@@ -1,6 +1,6 @@
 FROM node:20-bullseye
 
-WORKDIR /app
+WORKDIR /mqtt
 
 COPY package.json yarn.lock ./
 
@@ -10,5 +10,4 @@ COPY . .
 
 RUN yarn
 
-EXPOSE 8500
-
+CMD ["yarn", "tsnd", "client.ts"]

@@ -4,7 +4,7 @@ export class AlterCreatedAtColumn1737229253248 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.changeColumn(
       "measurements",
-      "created_at",
+      "time",
       new TableColumn({
         name: "measurement_time",
         type: "timestamp",
