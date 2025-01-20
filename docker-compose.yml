@@ -1,0 +1,82 @@
+services:
+  app:
+    build:
+      context: ./backend/sigma-api/
+      dockerfile: dockerfile
+    container_name: SIGMA-API
+    volumes:
+      - ..:/SIGMA_PROJECT:cached
+    ports:
+      - "8500:8500"
+    command: [ "sleep", "infinity" ]
+    networks:
+      - dev-network
+    depends_on:
+      - postgres
+      - redis
+      - mosquitto
+
+  postgres:
+    image: postgres:15
+    container_name: SIGMA-postgres
+    restart: always
+    env_file:
+      - ../backend/sigma-api/.env
+    ports:
+      - "5450:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dev-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "db_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7.4
+    container_name: SIGMA-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - dev-network
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: SIGMA-mosquitto
+    restart: always
+    ports:
+      - "1885:1883" 
+      - "9001:9001" 
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - ../backend/mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto-logs:/mosquitto/log
+    networks:
+      - dev-network
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-t", "healthcheck", "-h", "localhost", "-C", "1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  dev-network:
+    driver: bridge
+
+volumes:
+  postgres-data: {}
+  redis-data: {}
+  mosquitto-data: {}
+  config:
+  mosquitto-logs: {}

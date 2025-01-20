@@ -21,6 +21,7 @@ class MeasurementController {
       const result =
         await this.measurementService.createMeasurements(measurements);
       const parsedResult = ResponseMeasurementsArrayDTO.parse(result);
+      console.log(parsedResult);
       return res.status(201).json(parsedResult);
     } catch (error: any) {
       return res.status(500).json({ error: error.message });
