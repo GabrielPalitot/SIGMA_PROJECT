@@ -15,8 +15,8 @@ class IotDeviceService {
       latitude: data.latitude,
       longitude: data.longitude,
       id_identity_user: data.id_identity_user,
-      created_at: data.created_at.toString(),
-      updated_at: data.updated_at.toString(),
+      created_at: data.created_at.toISOString(),
+      updated_at: data.updated_at.toISOString(),
     };
     return response;
   }
@@ -29,8 +29,8 @@ class IotDeviceService {
       latitude: data.latitude,
       longitude: data.longitude,
       id_identity_user: data.id_identity_user,
-      created_at: data.created_at.toString(),
-      updated_at: data.updated_at.toString(),
+      created_at: data.created_at.toISOString(),
+      updated_at: data.updated_at.toISOString(),
     };
     return response;
   }

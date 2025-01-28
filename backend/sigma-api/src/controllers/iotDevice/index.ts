@@ -14,6 +14,7 @@ class IotDeviceController {
     try {
       const data = IotDeviceDTO.parse(req.body);
       const result = await this.iotDeviceService.createIotDevice(data);
+      console.log(result);
       const parsedResult = ResponseIotDeviceDTO.parse(result);
       return res.status(201).json(parsedResult);
     } catch (error: any) {
