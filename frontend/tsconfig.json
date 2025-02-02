@@ -1,17 +1,28 @@
 {
   "compilerOptions": {
-    "target": "ES2017", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "module": "CommonJS", /* Specify what module code is generated. */
-    "rootDirs": [
-      "./src"
-    ], /* Allow multiple folders to be treated as one when resolving modules. */
-    "outDir": "./build", /* Specify an output folder for all emitted files. */
-    "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
-    "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
-    "strict": true, /* Enable all strict type-checking options. */
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "target": "ES2017",
+    "module": "CommonJS",
+    "rootDirs": ["src"],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [{ "name": "next" }]
   },
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src/**/*", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

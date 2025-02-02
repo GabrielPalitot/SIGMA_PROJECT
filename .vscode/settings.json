@@ -13,11 +13,13 @@
   "eslint.workingDirectories": [
     {
       "directory": "../backend/sigma-api",
-      "changeProcessCWD": true
+      "changeProcessCWD": true,
+      "mode": "auto",
     },
     {
       "directory": "../frontend/",
-      "changeProcessCWD": true
+      "changeProcessCWD": true,
+      "mode": "auto",
     }
   ]
 }
