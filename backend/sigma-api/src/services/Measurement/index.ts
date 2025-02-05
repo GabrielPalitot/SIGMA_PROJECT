@@ -41,6 +41,16 @@ class MeasurementService {
       updated_at: item.updated_at.toISOString(),
     }));
   }
+
+  async getByIoTDevice(id: string): Promise<ResponseMeasurementsArrayDTOType> {
+    const result = await this.measurementRepository.findByIoTDevice(id);
+    return result.map((item) => ({
+      ...item,
+      measurement_time: item.measurement_time.toISOString(),
+      created_at: item.created_at.toISOString(),
+      updated_at: item.updated_at.toISOString(),
+    }));
+  }
 }
 
 export default MeasurementService;

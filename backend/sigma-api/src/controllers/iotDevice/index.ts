@@ -23,7 +23,7 @@ class IotDeviceController {
 
   public get = async (req: Request, res: Response): Promise<any> => {
     try {
-      const id = req.params.id;
+      const { id } = req.params;
       const result = await this.iotDeviceService.getIotDevice(id);
       if (!result) {
         return res.status(404).json({ message: "IotDevice not found" });

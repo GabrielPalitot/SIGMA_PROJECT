@@ -23,6 +23,10 @@ class MeasurementRepository implements IMeasurementRepository {
     return await this.instance.findOneBy({ id_esp: id });
   }
 
+  async findByIoTDevice(id: string): Promise<Measurement[]> {
+    return await this.instance.find({ where: { id_esp: id } });
+  }
+
   async findAll(): Promise<Measurement[]> {
     return await this.instance.find();
   }

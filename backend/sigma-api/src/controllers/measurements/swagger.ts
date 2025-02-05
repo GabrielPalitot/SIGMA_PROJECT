@@ -58,6 +58,36 @@ class MeasurementSwagger {
         },
       },
     },
+    getByIotDevice: {
+      summary: "GET All Measurements By IoT Device",
+      operationId: "getByIotDevice",
+      tags: ["Measurements"],
+      parameters: [
+        {
+          name: "id_esp",
+          in: "path",
+          required: true,
+          schema: { type: "string", format: "uuid" },
+          description: "The ID of the IoT device to retrieve",
+        },
+      ],
+      responses: {
+        "200": {
+          description: "Measurement successfully retrieved",
+          content: {
+            "application/json": {
+              schema: this.schemas.ResponseMeasurementsArrayDTO,
+            },
+          },
+        },
+        "404": {
+          description: "Measurement not found",
+        },
+        "500": {
+          description: "Internal Server Error",
+        },
+      },
+    },
   };
 
   public swaggerController = {
@@ -66,6 +96,9 @@ class MeasurementSwagger {
     },
     [`${this.route}/all`]: {
       get: this.swagger.getAllMeasurements,
+    },
+    [`${this.route}/{id_esp}`]: {
+      get: this.swagger.getByIotDevice,
     },
   };
 }
