@@ -29,7 +29,7 @@ services:
     networks:
       - dev-network
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "db_user"]
+      test: [ "CMD", "pg_isready", "-U", "db_user" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -44,9 +44,9 @@ services:
       - redis-data:/data
     networks:
       - dev-network
-    command: ["redis-server", "--appendonly", "yes"]
+    command: [ "redis-server", "--appendonly", "yes" ]
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -56,8 +56,8 @@ services:
     container_name: SIGMA-mosquitto
     restart: always
     ports:
-      - "1885:1883" 
-      - "9001:9001" 
+      - "1886:1883"
+      - "9001:9001"
     volumes:
       - mosquitto-data:/mosquitto/data
       - ../backend/mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
@@ -65,7 +65,7 @@ services:
     networks:
       - dev-network
     healthcheck:
-      test: ["CMD", "mosquitto_sub", "-t", "healthcheck", "-h", "localhost", "-C", "1"]
+      test: [ "CMD", "mosquitto_sub", "-t", "healthcheck", "-h", "localhost", "-C", "1" ]
       interval: 10s
       timeout: 5s
       retries: 5
