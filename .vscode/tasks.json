@@ -1,15 +1,42 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "Run Application",
-        "type": "shell",
-        "command": "",
-        "problemMatcher": [],
-        "group": {
-          "kind": "build",
-          "isDefault": true
-        }
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Sigma API",
+      "type": "shell",
+      "command": "yarn start",
+      "options": {
+        "cwd": "${workspaceFolder}/backend/sigma-api"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "group": "backend",
+        "panel": "shared",
+        "reveal": "always"
       }
-    ]
-  }
+    },
+    {
+      "label": "Start MQTT Service",
+      "type": "shell",
+      "command": "yarn start",
+      "options": {
+        "cwd": "${workspaceFolder}/backend/mqtt"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "group": "backend",
+        "panel": "shared",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Start Backend Services",
+      "dependsOn": ["Start Sigma API", "Start MQTT Service"],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

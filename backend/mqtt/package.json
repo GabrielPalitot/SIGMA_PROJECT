@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "ts-node-dev ./client.ts"
+  },
   "dependencies": {
     "axios": "^1.7.9",
     "ioredis": "^5.4.2",
