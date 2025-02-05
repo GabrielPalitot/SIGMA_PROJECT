@@ -1,15 +1,14 @@
 import { Request, Response, Router } from "express";
 import { IotDeviceDTO, ResponseIotDeviceDTO } from "./schema";
 import IotDeviceService from "../../services/IotDevice";
-import { IIotDeviceRepository } from "../../repositories/iotDevice/IotDeviceRepositoryInterface";
 
 class IotDeviceController {
   public router: Router;
-  public iotDeviceService = new IotDeviceService(this.iotDeviceRepository);
-  constructor(private readonly iotDeviceRepository: IIotDeviceRepository) {
+  constructor(private readonly iotDeviceService: IotDeviceService) {
     this.router = Router();
     this.routes();
   }
+
   public create = async (req: Request, res: Response): Promise<any> => {
     try {
       const data = IotDeviceDTO.parse(req.body);

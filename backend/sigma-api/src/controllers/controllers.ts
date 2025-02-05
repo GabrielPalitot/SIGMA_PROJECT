@@ -1,14 +1,14 @@
 import IotDeviceController from "./iotDevice";
-import Repositories from "../repositories/repositories";
 import MeasurementController from "./measurements";
+import Services from "../services/services";
 
 class Controllers {
-  constructor(private readonly repos: Repositories) {}
+  constructor(private readonly services: Services) {}
   public iotDeviceController = new IotDeviceController(
-    this.repos.iotDeviceRepository,
+    this.services.iotDeviceService,
   );
   public measurementController = new MeasurementController(
-    this.repos.measurementRepository,
+    this.services.measurementService,
   );
 }
 

@@ -5,6 +5,7 @@ import swaggerUI from "swagger-ui-express";
 import "reflect-metadata";
 import Repositories from "./repositories/repositories";
 import Controllers from "./controllers/controllers";
+import Services from "./services/services";
 
 class HttpServer {
   public app: express.Application;
@@ -15,7 +16,8 @@ class HttpServer {
   setup() {
     const postgresDataSource = this.setupPostgresDB().getDataSource();
     const repositories = new Repositories(postgresDataSource);
-    const controllers = new Controllers(repositories);
+    const services = new Services(repositories);
+    const controllers = new Controllers(services);
     this.setupMiddlewares();
     this.setupSwagger();
     this.setupRoutes(controllers);

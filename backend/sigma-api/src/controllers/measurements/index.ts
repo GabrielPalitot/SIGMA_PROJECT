@@ -1,17 +1,15 @@
 import { Request, Response, Router } from "express";
-import { IMeasurementRepository } from "../../repositories/measurement/MeasurementRepositoryInterface";
 import MeasurementService from "../../services/Measurement";
 import { MeasurementsArrayDTO, ResponseMeasurementsArrayDTO } from "./schema";
 
 class MeasurementController {
   public router: Router;
-  public measurementService = new MeasurementService(
-    this.measurementRepository,
-  );
-  constructor(private readonly measurementRepository: IMeasurementRepository) {
+
+  constructor(private readonly measurementService: MeasurementService) {
     this.router = Router();
     this.routes();
   }
+
   public createMeasurements = async (
     req: Request,
     res: Response,
