@@ -9,7 +9,7 @@ class IotDeviceController {
     this.routes();
   }
 
-  public create = async (req: Request, res: Response): Promise<any> => {
+  public create = async (req: Request, res: Response): Promise<Response> => {
     try {
       const data = IotDeviceDTO.parse(req.body);
       const result = await this.iotDeviceService.createIotDevice(data);
@@ -21,7 +21,7 @@ class IotDeviceController {
     }
   };
 
-  public get = async (req: Request, res: Response): Promise<any> => {
+  public get = async (req: Request, res: Response): Promise<Response> => {
     try {
       const { id } = req.params;
       const result = await this.iotDeviceService.getIotDevice(id);
@@ -35,8 +35,12 @@ class IotDeviceController {
     }
   };
   public routes() {
-    this.router.post("/iot-device", this.create);
-    this.router.get("/iot-device/:id", this.get);
+    this.router.post("/iot-device", async (req, res) => {
+      await this.create(req, res);
+    });
+    this.router.get("/iot-device/:id", async (req, res) => {
+      await this.get(req, res);
+    });
   }
 }
 
