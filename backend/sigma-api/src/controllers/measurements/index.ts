@@ -30,7 +30,7 @@ class MeasurementController {
   public getAllMeasurements = async (
     req: Request,
     res: Response,
-  ): Promise<any> => {
+  ): Promise<Response> => {
     try {
       const result = await this.measurementService.getAll();
       const parsedResult = ResponseMeasurementsArrayDTO.parse(result);
@@ -41,7 +41,10 @@ class MeasurementController {
     }
   };
 
-  public getByIoTDevice = async (req: Request, res: Response): Promise<any> => {
+  public getByIoTDevice = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
     try {
       const { id_esp } = req.params;
 
