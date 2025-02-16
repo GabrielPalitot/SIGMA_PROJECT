@@ -6,6 +6,7 @@ import "reflect-metadata";
 import Repositories from "./repositories/repositories";
 import Controllers from "./controllers/controllers";
 import Services from "./services/services";
+import cors from "cors";
 
 class HttpServer {
   public app: express.Application;
@@ -30,6 +31,15 @@ class HttpServer {
   }
 
   setupMiddlewares() {
+    this.app.use(
+      cors({
+        origin: "http://localhost:3000", // Permite requisições dessa origem
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+      }),
+    );
+
+    // Middleware para converter o body da requisição em JSON
     this.app.use(express.json());
   }
 
