@@ -1,6 +1,8 @@
 import { Request, Response, Router } from "express";
 import MeasurementService from "../../services/Measurement";
 import {
+  getIwnReqDTO,
+  getIwnResponseDTO,
   MeasurementsArrayDTO,
   MeasurementTimestampDTO,
   ResponseMeasurementsArrayDTO,
@@ -82,6 +84,20 @@ class MeasurementController {
     }
   };
 
+  public getIwn = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const { id_esp } = getIwnReqDTO.parse(req.params);
+
+      const result = await this.measurementService.calculateIWN(id_esp);
+
+      const parsedResult = getIwnResponseDTO.parse(result);
+
+      return res.status(200).json(parsedResult);
+    } catch (error: any) {
+      return res.status(500).json({ error: error.message });
+    }
+  };
+
   public routes() {
     this.router.post("/measurements", async (req: Request, res: Response) => {
       await this.createMeasurements(req, res);
@@ -103,6 +119,13 @@ class MeasurementController {
       "/measurements/:id_esp/timestamps",
       async (req: Request, res: Response) => {
         await this.getMeasurementsByTimestamp(req, res);
+      },
+    );
+
+    this.router.get(
+      "/measurements/:id_esp/iwn",
+      async (req: Request, res: Response) => {
+        await this.getIwn(req, res);
       },
     );
   }

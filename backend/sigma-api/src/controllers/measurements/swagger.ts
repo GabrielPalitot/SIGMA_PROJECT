@@ -1,5 +1,6 @@
 import zodToOpenAPI from "../../utils/zodUtilitary";
 import {
+  getIwnResponseDTO,
   MeasurementsArrayDTO,
   MeasurementTimestampDTO,
   ResponseMeasurementsArrayDTO,
@@ -12,6 +13,7 @@ class MeasurementSwagger {
     MeasurementTimestampDTO: zodToOpenAPI(MeasurementTimestampDTO),
     MeasurementsArrayDTO: zodToOpenAPI(MeasurementsArrayDTO),
     ResponseMeasurementsArrayDTO: zodToOpenAPI(ResponseMeasurementsArrayDTO),
+    getIwnResponseDTO: zodToOpenAPI(getIwnResponseDTO),
   };
 
   public swagger = {
@@ -140,6 +142,39 @@ class MeasurementSwagger {
         },
       },
     },
+    getIwn: {
+      summary: "GET IWN for IoT Device",
+      operationId: "getIwn",
+      tags: ["Measurements"],
+      parameters: [
+        {
+          name: "id_esp",
+          in: "path",
+          required: true,
+          schema: { type: "string", format: "uuid" },
+          description: "The ID of the IoT device to retrieve iwn for",
+        },
+      ],
+      responses: {
+        "200": {
+          description: "Iwn successfully retrieved",
+          content: {
+            "application/json": {
+              schema: this.schemas.getIwnResponseDTO,
+            },
+          },
+        },
+        "400": {
+          description: "Invalid parameters",
+        },
+        "404": {
+          description: "Measurements not found",
+        },
+        "500": {
+          description: "Internal Server Error",
+        },
+      },
+    },
   };
 
   public swaggerController = {
@@ -154,6 +189,9 @@ class MeasurementSwagger {
     },
     [`${this.route}/{id_esp}/timestamps`]: {
       get: this.swagger.getMeasurementsByTimestamp,
+    },
+    [`${this.route}/{id_esp}/iwn`]: {
+      get: this.swagger.getIwn,
     },
   };
 }

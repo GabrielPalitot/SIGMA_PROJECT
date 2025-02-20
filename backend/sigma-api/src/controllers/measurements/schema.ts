@@ -28,6 +28,18 @@ export const ResponseMeasurementDTO = z.object({
   updated_at: z.string().datetime({ offset: true }),
 });
 
+export const getIwnResponseDTO = z.object({
+  iwn: z.number(),
+  irriga: z.boolean(),
+});
+
+export const getIwnReqDTO = z.object({
+  id_esp: z.string().uuid(),
+});
+
+export type getIwnResponseDTOType = z.infer<typeof getIwnResponseDTO>;
+
+export type getIwnReqDTOType = z.infer<typeof getIwnReqDTO>;
 export const ResponseMeasurementsArrayDTO = z.array(ResponseMeasurementDTO);
 
 export const MeasurementsArrayDTO = z.array(MeasurementDTO);
