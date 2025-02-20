@@ -20,16 +20,16 @@ export default function SensorGrid() {
       justifyContent="center"
       sx={{
         display: "flex",
-        flexWrap: "wrap", // Garante que os elementos quebrem corretamente
+        flexWrap: "wrap", 
       }}
     >
       {sensorData.map((sensor, index) => (
         <Grid
           key={index}
           sx={{
-            width: { xs: "100%", sm: "48%", md: "23%" }, // 🟢 Responsivo de verdade
+            width: { xs: "100%", sm: "48%", md: "23%" }, 
             flexGrow: 1,
-            minWidth: "200px", // 🔹 Garante que os cards não fiquem muito pequenos
+            minWidth: "200px", 
             // display: "flex",
             justifyContent: "center",
           }}

@@ -54,31 +54,26 @@ const DynamicPopup = dynamic(
   { ssr: false },
 );
 
-export default function Map() {
-  // Estado para a posição, inicializado com um valor default
+export default function Map({ selectedDevice }: { selectedDevice: any | null}) {
   const [position, setPosition] = useState<[number, number]>(initialPosition);
   const [zoom, setZoom] = useState<number>(initialZoom);
   const [customIcon, setCustomIcon] = useState<any>(null);
+  
   const L = useLeaflet();
-  useEffect(() => {
-    axios
-      .get(`http://app:8500/iot-device/204276d4-fdc3-47c6-b4ee-36336b3bc9c3`)
-      .then((response) => {
-        console.log('entrei')
-        const { latitude, longitude } = response.data;
-        setPosition([latitude, longitude]);
-        setZoom(16);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar a localização do dispositivo", error);
-      });
-  }, []);
+
 
   useEffect(() => {
     if (L) {
       setCustomIcon(createCustomIcon(L));
     }
   }, [L]);
+
+  useEffect(() => {
+    if (selectedDevice) {
+      setPosition([selectedDevice.latitude, selectedDevice.longitude]);
+      setZoom(16); 
+    }
+  }, [selectedDevice]);
 
   return (
     <DynamicMapContainer
