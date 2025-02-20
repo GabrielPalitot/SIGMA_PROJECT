@@ -1,6 +1,10 @@
 import { Request, Response, Router } from "express";
 import MeasurementService from "../../services/Measurement";
-import { MeasurementsArrayDTO, ResponseMeasurementsArrayDTO } from "./schema";
+import {
+  MeasurementsArrayDTO,
+  MeasurementTimestampDTO,
+  ResponseMeasurementsArrayDTO,
+} from "./schema";
 
 class MeasurementController {
   public router: Router;
@@ -53,6 +57,28 @@ class MeasurementController {
       return res.status(500).json({ error: error.message });
     }
   };
+
+  public getMeasurementsByTimestamp = async (
+    req: Request,
+    res: Response,
+  ): Promise<any> => {
+    try {
+      const params = MeasurementTimestampDTO.parse({
+        ...req.params,
+        ...req.query,
+      });
+
+      const result =
+        await this.measurementService.getMeasurementsByTimestamp(params);
+
+      const parsedResult = ResponseMeasurementsArrayDTO.parse(result);
+
+      return res.status(200).json(parsedResult);
+    } catch (error: any) {
+      return res.status(500).json({ error: error.message });
+    }
+  };
+
   public routes() {
     this.router.post("/measurements", async (req: Request, res: Response) => {
       await this.createMeasurements(req, res);
@@ -67,6 +93,13 @@ class MeasurementController {
       "/measurements/:id_esp",
       async (req: Request, res: Response) => {
         await this.getByIoTDevice(req, res);
+      },
+    );
+
+    this.router.get(
+      "/measurements/:id_esp/timestamps",
+      async (req: Request, res: Response) => {
+        await this.getMeasurementsByTimestamp(req, res);
       },
     );
   }

@@ -1,10 +1,15 @@
 import zodToOpenAPI from "../../utils/zodUtilitary";
-import { MeasurementsArrayDTO, ResponseMeasurementsArrayDTO } from "./schema";
+import {
+  MeasurementsArrayDTO,
+  MeasurementTimestampDTO,
+  ResponseMeasurementsArrayDTO,
+} from "./schema";
 
 class MeasurementSwagger {
   private route = "/measurements";
 
   public schemas = {
+    MeasurementTimestampDTO: zodToOpenAPI(MeasurementTimestampDTO),
     MeasurementsArrayDTO: zodToOpenAPI(MeasurementsArrayDTO),
     ResponseMeasurementsArrayDTO: zodToOpenAPI(ResponseMeasurementsArrayDTO),
   };
@@ -88,6 +93,53 @@ class MeasurementSwagger {
         },
       },
     },
+    getMeasurementsByTimestamp: {
+      summary: "GET Measurements By IoT Device with Timestamp Filter",
+      operationId: "getMeasurementsByTimestamp",
+      tags: ["Measurements"],
+      parameters: [
+        {
+          name: "id_esp",
+          in: "path",
+          required: true,
+          schema: { type: "string", format: "uuid" },
+          description: "The ID of the IoT device to retrieve measurements for",
+        },
+        {
+          name: "timestampInit",
+          in: "query",
+          required: false,
+          schema: { type: "string", format: "date-time" },
+          description: "Start timestamp for filtering measurements",
+        },
+        {
+          name: "timestampEnd",
+          in: "query",
+          required: false,
+          schema: { type: "string", format: "date-time" },
+          description: "End timestamp for filtering measurements",
+        },
+      ],
+      responses: {
+        "200": {
+          description: "Measurements successfully retrieved",
+          content: {
+            "application/json": {
+              schema: this.schemas.ResponseMeasurementsArrayDTO,
+            },
+          },
+        },
+        "400": {
+          description: "Invalid parameters",
+        },
+        "404": {
+          description: "Measurements not found",
+        },
+        "500": {
+          description: "Internal Server Error",
+        },
+      },
+    },
   };
 
   public swaggerController = {
@@ -99,6 +151,9 @@ class MeasurementSwagger {
     },
     [`${this.route}/{id_esp}`]: {
       get: this.swagger.getByIotDevice,
+    },
+    [`${this.route}/{id_esp}/timestamps`]: {
+      get: this.swagger.getMeasurementsByTimestamp,
     },
   };
 }

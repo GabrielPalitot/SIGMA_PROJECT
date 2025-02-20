@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import Measurement from "../../models/Measurement";
 import { IMeasurementRepository } from "./MeasurementRepositoryInterface";
+import { MeasurementTimestamp } from "../../services/Measurement";
 
 class MeasurementRepository implements IMeasurementRepository {
   constructor(private readonly dataSource: DataSource) {}
@@ -30,6 +31,31 @@ class MeasurementRepository implements IMeasurementRepository {
   async findAll(): Promise<Measurement[]> {
     return await this.instance.find();
   }
+
+  async findByTimestamp(
+    params: Partial<MeasurementTimestamp>,
+  ): Promise<Measurement[]> {
+    const { id_esp, timestampInit, timestampEnd } = params;
+
+    const query = this.instance
+      .createQueryBuilder("measurement")
+      .where("measurement.id_esp = :id_esp", { id_esp });
+
+    if (timestampInit) {
+      query.andWhere("measurement.measurement_time >= :timestampInit", {
+        timestampInit,
+      });
+    }
+
+    if (timestampEnd) {
+      query.andWhere("measurement.measurement_time <= :timestampEnd", {
+        timestampEnd,
+      });
+    }
+
+    return await query.getMany();
+  }
+
   async deleteMeasurement(id: string): Promise<void> {
     await this.instance.delete({ id_esp: id });
   }
