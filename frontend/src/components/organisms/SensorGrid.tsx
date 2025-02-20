@@ -1,11 +1,15 @@
 import Grid from "@mui/material/Grid2";
 import SensorCard from "../molecules/SensorCard";
+import ThermostatIcon from '@mui/icons-material/Thermostat';
+import OpacitySharpIcon from '@mui/icons-material/OpacitySharp';
+import ThunderstormOutlinedIcon from '@mui/icons-material/ThunderstormOutlined';
+import AirOutlinedIcon from '@mui/icons-material/AirOutlined';
 
 const sensorData = [
-  { title: "Rain", value: "7.1 mm", icon: "↓" },
-  { title: "Temperature", value: "29.8°C", icon: "📊" },
-  { title: "Air Humidity", value: "59.8%", icon: "☀️" },
-  { title: "Soil Humidity", value: "36.8%", icon: "☀️" },
+  { title: "Chuva", value: "7.1 mm", icon: <ThunderstormOutlinedIcon color="info" /> },
+  { title: "Temperatura", value: "29.8°C", icon: <ThermostatIcon color="warning" /> },
+  { title: "Umidade do Ar", value: "59.8%", icon: <AirOutlinedIcon color="info" /> },
+  { title: "Umidade do Solo", value: "36.8%", icon: <OpacitySharpIcon color="info" /> },
 ];
 
 export default function SensorGrid() {
@@ -26,7 +30,7 @@ export default function SensorGrid() {
             width: { xs: "100%", sm: "48%", md: "23%" }, // 🟢 Responsivo de verdade
             flexGrow: 1,
             minWidth: "200px", // 🔹 Garante que os cards não fiquem muito pequenos
-            display: "flex",
+            // display: "flex",
             justifyContent: "center",
           }}
         >

@@ -3,6 +3,7 @@ import "leaflet/dist/leaflet.css";
 import useLeaflet from "@/hooks/useLeaflet";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import axios from "axios";
 
 const initialPosition: [number, number] = [-23.55052, -46.633308];
 const initialZoom = 10;
@@ -54,10 +55,28 @@ const DynamicPopup = dynamic(
 );
 
 export default function Map() {
-  const [position] = useState<[number, number]>(initialPosition);
-  const [zoom] = useState<number>(initialZoom);
+  // Estado para a posição, inicializado com um valor default
+  const [position, setPosition] = useState<[number, number]>(initialPosition);
+  const [zoom, setZoom] = useState<number>(initialZoom);
   const [customIcon, setCustomIcon] = useState<any>(null);
   const L = useLeaflet();
+  console
+  // Busca a posição do dispositivo no backend
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8500/iot-device/204276d4-fdc3-47c6-b4ee-36336b3bc9c3`)
+      .then((response) => {
+        console.log('entrei')
+        // Supondo que a resposta contenha { lat, lng }
+        const { latitude, longitude } = response.data;
+        setPosition([latitude, longitude]);
+        setZoom(16);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar a localização do dispositivo", error);
+      });
+  }, []);
+
   useEffect(() => {
     if (L) {
       setCustomIcon(createCustomIcon(L));
@@ -66,6 +85,7 @@ export default function Map() {
 
   return (
     <DynamicMapContainer
+      key={`map-container-${position[0]}-${position[1]}`}
       center={position}
       zoom={zoom}
       style={{ width: "100%", height: "100vh" }}
@@ -77,7 +97,7 @@ export default function Map() {
       />
       {customIcon && (
         <DynamicMarker position={position} icon={customIcon}>
-          <DynamicPopup>📍 Sensor Location</DynamicPopup>
+          <DynamicPopup>📍SIGMA Sensor Location</DynamicPopup>
         </DynamicMarker>
       )}
     </DynamicMapContainer>

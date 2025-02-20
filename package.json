@@ -1,5 +1,9 @@
 {
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/swagger-jsdoc": "6.0.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
   }
 }

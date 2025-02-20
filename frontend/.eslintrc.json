@@ -3,9 +3,13 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:storybook/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
     "prettier"
   ],
-  "plugins": ["@typescript-eslint", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -20,7 +24,13 @@
     "no-var": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "warn",
-    "semi": ["error", "always"],
-    "quotes": ["error", "double"]
+    "semi": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ]
   }
 }
