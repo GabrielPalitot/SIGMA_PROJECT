@@ -1,5 +1,9 @@
 import zodToOpenAPI from "../../utils/zodUtilitary";
-import { IotDeviceDTO, ResponseIotDeviceDTO } from "./schema";
+import {
+  IotDeviceDTO,
+  ResponseIotDeviceArrayDTO,
+  ResponseIotDeviceDTO,
+} from "./schema";
 
 class IotDeviceSwagger {
   private route = "/iot-device";
@@ -7,6 +11,7 @@ class IotDeviceSwagger {
   public schemas = {
     IotDeviceDTO: zodToOpenAPI(IotDeviceDTO),
     ResponseIotDeviceDTO: zodToOpenAPI(ResponseIotDeviceDTO),
+    ResponseIotDeviceArrayDTO: zodToOpenAPI(ResponseIotDeviceArrayDTO),
   };
 
   public swagger = {
@@ -67,11 +72,33 @@ class IotDeviceSwagger {
         },
       },
     },
+    getAllIotDevices: {
+      summary: "GET All IOT Devices",
+      operationId: "getAllIotDevices",
+      tags: ["IoT Devices"],
+      responses: {
+        "200": {
+          description: "Iot Devices successfully retrieved",
+          content: {
+            "application/json": {
+              schema: this.schemas.ResponseIotDeviceArrayDTO,
+            },
+          },
+        },
+        "404": {
+          description: "Measurement not found",
+        },
+        "500": {
+          description: "Internal Server Error",
+        },
+      },
+    },
   };
 
   public swaggerController = {
     [`${this.route}`]: {
       post: this.swagger.create,
+      get: this.swagger.getAllIotDevices,
     },
     [`${this.route}/{id_esp}`]: {
       get: this.swagger.get,

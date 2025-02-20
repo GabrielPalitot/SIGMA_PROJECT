@@ -1,5 +1,9 @@
 import { Request, Response, Router } from "express";
-import { IotDeviceDTO, ResponseIotDeviceDTO } from "./schema";
+import {
+  IotDeviceDTO,
+  ResponseIotDeviceArrayDTO,
+  ResponseIotDeviceDTO,
+} from "./schema";
 import IotDeviceService from "../../services/IotDevice";
 
 class IotDeviceController {
@@ -34,12 +38,26 @@ class IotDeviceController {
       return res.status(500).json({ error: error.message });
     }
   };
+
+  public getAll = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const result = await this.iotDeviceService.getIotDevices();
+      const parsed_result = ResponseIotDeviceArrayDTO.parse(result);
+      return res.status(200).json(parsed_result);
+    } catch (error: any) {
+      return res.status(500).json({ error: error.message });
+    }
+  };
+
   public routes() {
     this.router.post("/iot-device", async (req, res) => {
       await this.create(req, res);
     });
     this.router.get("/iot-device/:id", async (req, res) => {
       await this.get(req, res);
+    });
+    this.router.get("/iot-device", async (req, res) => {
+      await this.getAll(req, res);
     });
   }
 }

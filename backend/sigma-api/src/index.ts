@@ -33,13 +33,12 @@ class HttpServer {
   setupMiddlewares() {
     this.app.use(
       cors({
-        origin: "http://localhost:3000", // Permite requisições dessa origem
+        origin: "http://localhost:3000",
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"],
       }),
     );
 
-    // Middleware para converter o body da requisição em JSON
     this.app.use(express.json());
   }
 

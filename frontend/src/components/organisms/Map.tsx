@@ -60,14 +60,11 @@ export default function Map() {
   const [zoom, setZoom] = useState<number>(initialZoom);
   const [customIcon, setCustomIcon] = useState<any>(null);
   const L = useLeaflet();
-  console
-  // Busca a posição do dispositivo no backend
   useEffect(() => {
     axios
-      .get(`http://localhost:8500/iot-device/204276d4-fdc3-47c6-b4ee-36336b3bc9c3`)
+      .get(`http://app:8500/iot-device/204276d4-fdc3-47c6-b4ee-36336b3bc9c3`)
       .then((response) => {
         console.log('entrei')
-        // Supondo que a resposta contenha { lat, lng }
         const { latitude, longitude } = response.data;
         setPosition([latitude, longitude]);
         setZoom(16);
