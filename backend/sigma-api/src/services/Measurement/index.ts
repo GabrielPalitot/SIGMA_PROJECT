@@ -186,6 +186,7 @@ class MeasurementService {
       timestampEnd: now.toISOString(),
     });
 
+    console.log(measurementsToday);
     const uPercent =
       measurementsToday[measurementsToday.length - 1].solo_humidity;
     console.log("ANTES");
