@@ -40,7 +40,6 @@ class MeasurementService {
       uPercent = 1;
     }
 
-
     const tension = Math.pow(36.88 / uPercent, 1 / 0.102);
     return tension;
   }
@@ -172,7 +171,7 @@ class MeasurementService {
     const twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     const eightDaysAgo = new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000);
-    const sixHoursAgo = new Date(now.getTime() - 6 * 60 * 60 * 1000); 
+    const sixHoursAgo = new Date(now.getTime() - 6 * 60 * 60 * 1000);
     // Busca medições de "idEsp" entre twoDaysAgo e now
 
     const measurementsToday = await this.getMeasurementsByTimestamp({

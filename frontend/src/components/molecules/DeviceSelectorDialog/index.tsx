@@ -29,7 +29,7 @@ export default function DeviceSelectorDialog({
   useEffect(() => {
     if (open) {
       axios
-        .get("http://localhost:8500/iot-device/")
+        .get("http://app:8500/iot-device/")
         .then((response) => {
           setDevices(response.data);
         })
@@ -48,7 +48,7 @@ export default function DeviceSelectorDialog({
         startDate.setHours(endDate.getHours() - 6);
 
         const response = await axios.get(
-          `http://localhost:8500/measurements/${selectedDeviceId}/timestamps`,
+          `http://app:8500/measurements/${selectedDeviceId}/timestamps`,
           {
             params: {
               timestampInit: startDate.toISOString(),
