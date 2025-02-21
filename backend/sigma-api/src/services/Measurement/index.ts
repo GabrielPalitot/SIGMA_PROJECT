@@ -39,6 +39,9 @@ class MeasurementService {
     if (uPercent <= 0) {
       uPercent = 1;
     }
+    console.log("DEPOIS");
+    console.log(uPercent);
+
     const tension = Math.pow(36.88 / uPercent, 1 / 0.102);
     return tension;
   }
@@ -180,6 +183,8 @@ class MeasurementService {
 
     const uPercent =
       measurementsToday[measurementsToday.length - 1].solo_humidity;
+    console.log("ANTES");
+    console.log(uPercent);
     // const uPercent = 24;
 
     // 1) Converter umidade (massa) -> tensão
