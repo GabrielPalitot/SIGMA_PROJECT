@@ -172,13 +172,14 @@ class MeasurementService {
   }> {
     // 3) Obter dados dos últimos 2 dias para esse dispositivo
     const now = new Date();
-    console.log(now);
     // const now = new Date(new Date().getTime() - 3 * 24 * 60 * 60 * 1000);
     const twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     const eightDaysAgo = new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000);
 
     // Busca medições de "idEsp" entre twoDaysAgo e now
+    console.log(twoDaysAgo.toISOString());
+    console.log(now.toISOString());
     const measurementsToday = await this.getMeasurementsByTimestamp({
       id_esp: idEsp,
       timestampInit: twoDaysAgo.toISOString(),
