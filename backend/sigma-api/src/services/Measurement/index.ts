@@ -136,7 +136,7 @@ class MeasurementService {
       timestampEnd,
     });
 
-    if (!measurements.length) {
+    if (measurements.length === 0) {
       throw new Error(
         "Não há medições para calcular ETc no período especificado.",
       );

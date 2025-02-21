@@ -29,16 +29,12 @@ const REDIS_KEY = "sensor_data_queue";
 const BATCH_SIZE = 30;
 const API_URL_POST =
   process.env.API_URL || "http://app:8500/measurements";
-const API_URL_GET = "http://app:8500/iot-device/id-esp";
-
-const KC = 1.15;
-const LATITUDE = -3.71839;
-const THREE_DAYS_COUNT = 1000;
+const API_IRRIGATION_CHECK = "http://localhost:8500/measurements/51608cdd-d973-44fb-9ea1-7dd811fbf18f/iwn";
 
 
 mqttClient.on("connect", () => {
   console.log("Connected to MQTT broker");
-  mqttClient.subscribe(["sigma-project-ggl/measurements", "sigma-project-ggl/check"]);
+  mqttClient.subscribe(["sigma-project-ggl/measurements"]);
 });
 
 mqttClient.on("message", async (topic, message) => {
@@ -52,24 +48,12 @@ mqttClient.on("message", async (topic, message) => {
       if (queueLength >= BATCH_SIZE) {
         await processBatch();
       }
-    } else if (topic === "sigma-project-ggl/check") {
-      console.log("Received check message");
-      await findIdEsp();
     }
 
   } catch (error) {
     console.log(error);
   }
 });
-
-async function findIdEsp() {
-  try {
-    const response = await axios.get(API_URL_GET);
-    console.log("Data received:", response.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
 
 async function processBatch() {
   const batch = await redis.lrange(REDIS_KEY, 0, BATCH_SIZE - 1);
@@ -96,6 +80,30 @@ setInterval(async () => {
     await processBatch();
   }
 }, 5000);
+
+
+
+
+cron.schedule("*/50 * * * * *", async () => {
+  console.log("Checking irrigation status...");
+
+  try {
+    const response = await axios.get(API_IRRIGATION_CHECK);
+    const irrigationData = response.data; 
+
+    console.log("Irrigation data received:", irrigationData);
+
+    mqttClient.publish("sigma-project-ggl/evapotranspiracao", JSON.stringify(irrigationData));
+    console.log("Irrigation data published to MQTT!");
+  } catch (error) {
+    console.error("Failed to fetch irrigation data:", error);
+  }
+}, {
+  timezone: "America/Fortaleza"
+});
+
+
+
 
 
 // ====================================== Alterar aqui ======================================
