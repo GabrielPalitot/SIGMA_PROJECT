@@ -39,8 +39,7 @@ class MeasurementService {
     if (uPercent <= 0) {
       uPercent = 1;
     }
-    console.log("DEPOIS");
-    console.log(uPercent);
+
 
     const tension = Math.pow(36.88 / uPercent, 1 / 0.102);
     return tension;
@@ -131,10 +130,7 @@ class MeasurementService {
     timestampEnd: string,
   ): Promise<{ tmax: number; tmin: number; tmean: number }> {
     // 1) Buscar medições do repositório com base em um intervalo de tempo
-    console.log("TIMESTAMP DE INICIO KRL");
-    console.log(timestampInit);
-    console.log("TIMESTAMP DE FIMMMMMM KRL");
-    console.log(timestampEnd);
+
     const measurements = await this.getMeasurementsByTimestamp({
       id_esp,
       timestampInit,
@@ -178,19 +174,15 @@ class MeasurementService {
     const eightDaysAgo = new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000);
     const sixHoursAgo = new Date(now.getTime() - 6 * 60 * 60 * 1000); 
     // Busca medições de "idEsp" entre twoDaysAgo e now
-    console.log(twoDaysAgo.toISOString());
-    console.log(now.toISOString());
+
     const measurementsToday = await this.getMeasurementsByTimestamp({
       id_esp: idEsp,
       timestampInit: sixHoursAgo.toISOString(),
       timestampEnd: now.toISOString(),
     });
 
-    console.log(measurementsToday);
     const uPercent =
       measurementsToday[measurementsToday.length - 1].solo_humidity;
-    console.log("ANTES");
-    console.log(uPercent);
     // const uPercent = 24;
 
     // 1) Converter umidade (massa) -> tensão
