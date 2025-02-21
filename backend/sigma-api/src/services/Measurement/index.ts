@@ -131,6 +131,10 @@ class MeasurementService {
     timestampEnd: string,
   ): Promise<{ tmax: number; tmin: number; tmean: number }> {
     // 1) Buscar medições do repositório com base em um intervalo de tempo
+    console.log("TIMESTAMP DE INICIO KRL");
+    console.log(timestampInit);
+    console.log("TIMESTAMP DE FIMMMMMM KRL");
+    console.log(timestampEnd);
     const measurements = await this.getMeasurementsByTimestamp({
       id_esp,
       timestampInit,
