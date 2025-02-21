@@ -84,12 +84,12 @@ setInterval(async () => {
 
 
 
-cron.schedule("*/50 * * * * *", async () => {
+setInterval(async () => {
   console.log("Checking irrigation status...");
 
   try {
     const response = await axios.get(API_IRRIGATION_CHECK);
-    const irrigationData = response.data; 
+    const irrigationData = response.data;
 
     console.log("Irrigation data received:", irrigationData);
 
@@ -98,9 +98,8 @@ cron.schedule("*/50 * * * * *", async () => {
   } catch (error) {
     console.error("Failed to fetch irrigation data:", error);
   }
-}, {
-  timezone: "America/Fortaleza"
-});
+}, 30000); // 30.000ms = 30 segundos
+
 
 
 

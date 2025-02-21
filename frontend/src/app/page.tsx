@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography, Box, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import SensorGrid from "@/components/organisms/SensorGrid";
 import Map from "@/components/organisms/Map";
@@ -10,6 +10,7 @@ import DeviceSelectorDialog from "@/components/molecules/DeviceSelectorDialog";
 export default function Dashboard() {
   const [selectedDevice, setSelectedDevice] = useState<any | null>(null);
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
+
   return (
     <PanelGroup direction="horizontal">
       <Panel defaultSize={50} minSize={20} maxSize={80}>
@@ -32,7 +33,8 @@ export default function Dashboard() {
               ? `Dispositivo Selecionado: ${selectedDevice.id_esp}`
               : "Selecionar Dispositivo"}
           </Button>
-          <SensorGrid />
+          
+          <SensorGrid selectedDevice={selectedDevice} />
         </Box>
       </Panel>
 

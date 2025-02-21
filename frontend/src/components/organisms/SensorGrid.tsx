@@ -10,25 +10,33 @@ const sensorData = [
     title: "Chuva",
     value: "7.1 mm",
     icon: <ThunderstormOutlinedIcon color="info" />,
+    dataKey: "has_rain", // Adicionando a chave dos dados
   },
   {
     title: "Temperatura",
     value: "29.8°C",
     icon: <ThermostatIcon color="warning" />,
+    dataKey: "temperature", // Adicionando a chave dos dados
   },
   {
     title: "Umidade do Ar",
     value: "59.8%",
     icon: <AirOutlinedIcon color="info" />,
+    dataKey: "air_humidity", // Adicionando a chave dos dados
   },
   {
     title: "Umidade do Solo",
     value: "36.8%",
     icon: <OpacitySharpIcon color="info" />,
+    dataKey: "solo_humidity", // Adicionando a chave dos dados
   },
 ];
 
-export default function SensorGrid() {
+interface SensorGridProps {
+  selectedDevice: any;
+}
+
+export default function SensorGrid({ selectedDevice }: SensorGridProps) {
   return (
     <Grid
       container
@@ -46,7 +54,6 @@ export default function SensorGrid() {
             width: { xs: "100%", sm: "48%", md: "23%" },
             flexGrow: 1,
             minWidth: "200px",
-            // display: "flex",
             justifyContent: "center",
           }}
         >
@@ -54,6 +61,8 @@ export default function SensorGrid() {
             title={sensor.title}
             value={sensor.value}
             icon={sensor.icon}
+            device={selectedDevice}
+            dataKey={sensor.dataKey} // Passando a chave dos dados
           />
         </Grid>
       ))}

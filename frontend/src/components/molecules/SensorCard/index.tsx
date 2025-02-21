@@ -1,22 +1,38 @@
-import React from "react";
+import { useState } from "react";
 import { Card, CardContent, Typography } from "@mui/material";
-import { lightBlue } from "@mui/material/colors";
+import ChartDialog from "@/components/molecules/chartDialog";
 
-export interface SensorCardProps {
+interface SensorCardProps {
   title: string;
   value: string;
   icon: React.ReactNode;
+  device: any;
+  dataKey: string; // Adicionando uma prop para especificar a chave dos dados
 }
 
-export default function SensorCard({ title, value, icon }: SensorCardProps) {
+export default function SensorCard({ title, value, icon, device, dataKey }: SensorCardProps) {
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  // Filtrando e ordenando os dados de acordo com a chave especificada
+  const filteredData = (device?.data?.map((d: any) => ({
+    timestamp: d.measurement_time,
+    value: d[dataKey],
+  })) || []).sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
   return (
-    <Card sx={{ backgroundColor: lightBlue[100] }}>
-      <CardContent sx={{ height: "100%" }}>
-        <Typography variant="h6">
-          {icon} {title}
-        </Typography>
-        <Typography variant="h4">{value}</Typography>
-      </CardContent>
-    </Card>
+    <>
+      <Card onClick={() => setDialogOpen(true)}>
+        <CardContent>
+          <Typography variant="h5">{title}</Typography>
+          <Typography variant="h6">{value}</Typography>
+          {icon}
+        </CardContent>
+      </Card>
+      <ChartDialog
+        open={isDialogOpen}
+        onClose={() => setDialogOpen(false)}
+        data={filteredData}
+      />
+    </>
   );
 }

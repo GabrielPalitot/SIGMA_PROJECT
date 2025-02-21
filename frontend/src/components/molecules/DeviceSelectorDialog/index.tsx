@@ -6,9 +6,7 @@ import {
   DialogTitle,
   Button,
   FormControl,
-  InputLabel,
   MenuItem,
-  Select,
   TextField,
   Box,
 } from "@mui/material";
@@ -17,7 +15,7 @@ import axios from "axios";
 interface DeviceSelectorDialogProps {
   open: boolean;
   onClose: () => void;
-  onSelectDevice: (deviceId: string) => void;
+  onSelectDevice: (device: any) => void;
 }
 
 export default function DeviceSelectorDialog({
@@ -41,11 +39,33 @@ export default function DeviceSelectorDialog({
     }
   }, [open]);
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const selectedDevice = devices.find((d) => d.id_esp === selectedDeviceId);
     if (selectedDevice) {
-      onSelectDevice(selectedDevice);
-      onClose();
+      try {
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(endDate.getDate() - 2);
+
+        const response = await axios.get(
+          `http://localhost:8500/measurements/${selectedDeviceId}/timestamps`,
+          {
+            params: {
+              timestampInit: startDate.toISOString(),
+              timestampEnd: endDate.toISOString(),
+            },
+          }
+        );
+
+        const deviceData = {
+          ...selectedDevice,
+          data: response.data,
+        };
+        onSelectDevice(deviceData);
+        onClose();
+      } catch (error) {
+        console.error("Erro ao buscar dados do dispositivo", error);
+      }
     }
   };
 
@@ -73,7 +93,6 @@ export default function DeviceSelectorDialog({
           </FormControl>
         </Box>
       </DialogContent>
-
       <DialogActions>
         <Button onClick={onClose} color="secondary">
           Cancelar
