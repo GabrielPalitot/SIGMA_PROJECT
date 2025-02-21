@@ -63,6 +63,6 @@ class HttpServer {
 const httpServer = new HttpServer();
 httpServer.setup();
 const app = httpServer.getExpressApp();
-app.listen(8500, () => {
+app.listen(8500, "0.0.0.0", () => {
   console.log("Server is running on port 8500");
 });
