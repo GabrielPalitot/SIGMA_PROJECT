@@ -9,7 +9,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
+} from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -18,7 +18,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 interface DeviceChartProps {
@@ -40,7 +40,9 @@ export default function DeviceChart({ data }: DeviceChartProps) {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "600px" }}> {/* Aumentando a altura do gráfico */}
+    <Box sx={{ width: "100%", height: "600px" }}>
+      {" "}
+      {/* Aumentando a altura do gráfico */}
       <Line data={chartData} />
     </Box>
   );

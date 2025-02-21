@@ -45,7 +45,7 @@ export default function DeviceSelectorDialog({
       try {
         const endDate = new Date();
         const startDate = new Date();
-        startDate.setDate(endDate.getDate() - 2);
+        startDate.setHours(endDate.getHours() - 6);
 
         const response = await axios.get(
           `http://localhost:8500/measurements/${selectedDeviceId}/timestamps`,
@@ -54,7 +54,7 @@ export default function DeviceSelectorDialog({
               timestampInit: startDate.toISOString(),
               timestampEnd: endDate.toISOString(),
             },
-          }
+          },
         );
 
         const deviceData = {

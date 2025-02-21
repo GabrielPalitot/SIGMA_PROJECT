@@ -33,7 +33,7 @@ export default function Dashboard() {
               ? `Dispositivo Selecionado: ${selectedDevice.id_esp}`
               : "Selecionar Dispositivo"}
           </Button>
-          
+
           <SensorGrid selectedDevice={selectedDevice} />
         </Box>
       </Panel>

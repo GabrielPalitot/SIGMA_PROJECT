@@ -3,7 +3,6 @@ import "leaflet/dist/leaflet.css";
 import useLeaflet from "@/hooks/useLeaflet";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import axios from "axios";
 
 const initialPosition: [number, number] = [-23.55052, -46.633308];
 const initialZoom = 10;
