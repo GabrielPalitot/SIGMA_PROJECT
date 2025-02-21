@@ -54,13 +54,16 @@ const DynamicPopup = dynamic(
   { ssr: false },
 );
 
-export default function Map({ selectedDevice }: { selectedDevice: any | null}) {
+export default function Map({
+  selectedDevice,
+}: {
+  selectedDevice: any | null;
+}) {
   const [position, setPosition] = useState<[number, number]>(initialPosition);
   const [zoom, setZoom] = useState<number>(initialZoom);
   const [customIcon, setCustomIcon] = useState<any>(null);
-  
-  const L = useLeaflet();
 
+  const L = useLeaflet();
 
   useEffect(() => {
     if (L) {
@@ -71,7 +74,7 @@ export default function Map({ selectedDevice }: { selectedDevice: any | null}) {
   useEffect(() => {
     if (selectedDevice) {
       setPosition([selectedDevice.latitude, selectedDevice.longitude]);
-      setZoom(16); 
+      setZoom(16);
     }
   }, [selectedDevice]);
 

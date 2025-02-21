@@ -7,7 +7,7 @@ firebase-debug.log*
 firebase-debug.*.log*
 
 cookie_keys.json
-
+.next
 
 build/
 .firebase/

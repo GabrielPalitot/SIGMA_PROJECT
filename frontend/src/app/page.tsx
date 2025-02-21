@@ -13,14 +13,14 @@ export default function Dashboard() {
   return (
     <PanelGroup direction="horizontal">
       <Panel defaultSize={50} minSize={20} maxSize={80}>
-      <Box
+        <Box
           sx={{
             padding: 3,
             overflowY: "auto",
             height: "100vh",
             display: "flex",
             flexDirection: "column",
-            gap: 2, 
+            gap: 2,
           }}
         >
           <Button
@@ -28,12 +28,13 @@ export default function Dashboard() {
             color="primary"
             onClick={() => setDialogOpen(true)}
           >
-            {selectedDevice ? `Dispositivo Selecionado: ${selectedDevice.id_esp}` : "Selecionar Dispositivo"}
+            {selectedDevice
+              ? `Dispositivo Selecionado: ${selectedDevice.id_esp}`
+              : "Selecionar Dispositivo"}
           </Button>
-          <SensorGrid  />
+          <SensorGrid />
         </Box>
       </Panel>
-
 
       <PanelResizeHandle
         style={{

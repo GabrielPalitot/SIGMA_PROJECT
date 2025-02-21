@@ -11,7 +11,7 @@ export interface SensorCardProps {
 export default function SensorCard({ title, value, icon }: SensorCardProps) {
   return (
     <Card sx={{ backgroundColor: lightBlue[100] }}>
-      <CardContent sx={{ height: '100%' }}>
+      <CardContent sx={{ height: "100%" }}>
         <Typography variant="h6">
           {icon} {title}
         </Typography>
