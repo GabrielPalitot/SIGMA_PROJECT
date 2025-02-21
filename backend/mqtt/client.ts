@@ -29,7 +29,7 @@ const REDIS_KEY = "sensor_data_queue";
 const BATCH_SIZE = 30;
 const API_URL_POST =
   process.env.API_URL || "http://app:8500/measurements";
-const API_IRRIGATION_CHECK = "http://localhost:8500/measurements/51608cdd-d973-44fb-9ea1-7dd811fbf18f/iwn";
+const API_IRRIGATION_CHECK = "http://app:8500/measurements/51608cdd-d973-44fb-9ea1-7dd811fbf18f/iwn";
 
 
 mqttClient.on("connect", () => {
