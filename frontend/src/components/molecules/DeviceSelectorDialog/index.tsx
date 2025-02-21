@@ -25,7 +25,7 @@ export default function DeviceSelectorDialog({
 }: DeviceSelectorDialogProps) {
   const [devices, setDevices] = useState<any[]>([]);
   const [selectedDeviceId, setSelectedDeviceId] = useState<string>("");
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8500";
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://34.59.117.190:8500"
   useEffect(() => {
     if (open) {
       axios
