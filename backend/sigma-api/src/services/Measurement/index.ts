@@ -37,9 +37,7 @@ class MeasurementService {
    */
   private convertMassMoistureToTension(uPercent: number): number {
     if (uPercent <= 0) {
-      throw new Error(
-        "A umidade (U) deve ser maior que zero para a conversão.",
-      );
+      uPercent = 1;
     }
     const tension = Math.pow(36.88 / uPercent, 1 / 0.102);
     return tension;
@@ -178,9 +176,6 @@ class MeasurementService {
       timestampInit: twoDaysAgo.toISOString(),
       timestampEnd: now.toISOString(),
     });
-    console.log(now.toISOString());
-    console.log(twoDaysAgo.toISOString());
-    // console.log(measurementsToday);
 
     const uPercent =
       measurementsToday[measurementsToday.length - 1].solo_humidity;
@@ -188,11 +183,9 @@ class MeasurementService {
 
     // 1) Converter umidade (massa) -> tensão
     const uTensionKPa = this.convertMassMoistureToTension(uPercent);
-    console.log(uTensionKPa);
 
     // 2) Tensão -> umidade volumétrica
     const umidadeAtual = this.vanGenuchten(uTensionKPa);
-    console.log(umidadeAtual);
 
     // 4) Calcular ETc para cada dia
     // hoje

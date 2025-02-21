@@ -85,10 +85,23 @@ class IotDeviceService {
     longitude: number,
   ) {
     try {
+      console.log(latitude);
+      console.log(longitude);
       const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+      console.log(url);
 
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          "User-Agent": "SigmaProject/1.0 (your_email@example.com)",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
+      console.log("Nominatim Response:", data); // <-- Log para depuração
 
       if (!data || !data.address) {
         throw new Error(
@@ -106,7 +119,7 @@ class IotDeviceService {
       return { state, city };
     } catch (error) {
       console.error("Error in search for city and state", error);
-      return { state: null, city: null };
+      return { state: "No data", city: "No data" };
     }
   }
 }
