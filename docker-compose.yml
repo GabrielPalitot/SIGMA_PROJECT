@@ -21,12 +21,12 @@ services:
     container_name: SIGMA-FRONTEND
     ports:
       - "3000:3000"
-    networks:
+    networks: 
       - dev-network
     depends_on:
       - app
     environment:
-      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=http://34.59.117.190:8500
     command: "yarn start"
 
   nginx:
